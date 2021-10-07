@@ -12,7 +12,7 @@ A entrada deste algorítmo deve ser o grafo e suas interconexões, e a saída de
 # Aplicações Práticas do problema
 Um problema que envolve caminhos hamiltonianos é o problema do caixeiro viajante, em que um caixeiro deseja visitar um conjunto de N cidades (vértices), passando por cada cidade exatamente uma vez e retornando à cidade de origem, fazendo o caminho de menor tamanho possível.Em 2009 conseguiu-se uma resolução para este problema utilizando-se de bactérias na implementação do algoritmo, que historicamente costuma ter um custo de tempo de computação exponencial.
 
-Outra aplicação é o problema do ônibus e os alunos. O ônibus deve passar por todos os alunos mas busca-se o caminho que passe por todas as casas e retorne à escola uma só vez.
+Outra aplicação é o problema do ônibus e os alunos. O ônibus deve passar por todos os alunos mas busca-se o caminho que passe por todas as casas uma só vez e retorne à escola.
 
 # algoritmo de solução
 O algorítmo fará backtracking para alcançar cada resposta. Assim como no problema das N-rainhas, a cada nova posição válida na resposta, começa um nova busca através dessa ramificação.
@@ -30,6 +30,8 @@ O método main chama o método configuraGrafo(String diretorio). Esse método in
 Ao voltar ao método main, é chamado Hamiltonian(int k) que é um método recursivo, com o parametro 2 pois iremos comparar as respostas formadas a partir da segunda posição do arranjo respostas (lembre-se que estamos tratando o array como se começasse em 1), que levará à comparação das respostas formadas a partir da terceira posição... Até que k==nVertices.
 
 O laço em Hamiltonian começa chamando o método NextVertex(k), que inicia outro laço que só será interrompido apenas quando encontrar uma resposta válida que ou tenha menos que nVertices, ou que tenha nVertices e a ultima resposta seja um vértice que se conecta ao primeiro. Antes dessa decisão, se a posição em resposta[k] conter valor inteiro zero, significa que esgotaram as tentativas desta etapa de backtracking, então retorna ao método Hamiltonian. Verifica-se também a conexão no grafo entre o vértice na posição k da resposta e o da posição anterior e , caso não haja, não haverá atualização no boolean valido = false, ou seja, a resposta é descartada e o próximo vértice é testado. Além disso, há um laço que percorre com int j=1 da primeira posição de resposta até a posição k-1, caso haja um item duplicado na resposta, boolean valido recebe false, e o laço se encerra, se não houver item duplicado, boolean valido recebe true, então a resposta é válida neste caso.
+
+![imagem3](https://user-images.githubusercontent.com/89496407/136310993-eaec247b-e43a-4528-8e84-e8f4d0c300af.png)
 
 Ao retornar para Hamiltonian, se o ultimo vértice gerado por NextVertex for zero, esgotaram-se as tentativas de backtracking, retorne imediatamente. Caso a ultima posição de resposta manipulada por NextVertex seja igual nVertices, é gerada uma String com a sequencia atual da resposta (EX: 1,3,7,...,14,1), e chama-se o método estaNaLista para ver se a resposta já existe na lista, porém invertida, e caso não haja, é inserida a nova resposta. Do contrário, caso a ultima posição manipulada não seja igual a nVertices, então é Chamado Hamiltonian(k+1), para iniciar a manipulação da posição seguinte da resposta.
 Após o primeiro Hamiltonian finalmente terminar (note que ele é o ultimo), o resultado aparece na tela da seguinte maneira: "Total circuitos hamiltonianos obtidos: k", onde k é o total de respostas, seguido de k linhas com todos os ciclos hamiltonianos encontrados.
